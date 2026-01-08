@@ -1,12 +1,24 @@
 spring:
+  application:
+    name: my-best-restaurants
+
   datasource:
-    url: jdbc:postgresql://172.17.0.2:5432/livraria
-    username: postgres
-    password: mysecretpassword
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/restaurants}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+
   jpa:
     database: postgresql
     hibernate:
       ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
 jwt:
-  expiration: 86400000
-  secret: j#G1k2*m7N#3CC&1
+  secret: ${JWT_SECRET:mySuperSecretKeyForJWTTokenGenerationThatIsAtLeast256BitsLong!}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+server:
+  port: ${SERVER_PORT:8080}
